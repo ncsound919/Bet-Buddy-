@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bet Buddy - Learn from your own bets. Track, analyze, and improve your betting decisions with an accessible, user-friendly interface.">
+    <title>Bet Buddy - Learn from Your Bets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner">
+        <div class="header-container">
+            <h1>Bet Buddy</h1>
+            <p class="tagline">Learn from your own bets</p>
+        </div>
+        
+        <nav role="navigation" aria-label="Main navigation">
+            <ul>
+                <li><a href="#home" aria-current="page">Home</a></li>
+                <li><a href="#add-bet">Add Bet</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main id="main-content" role="main">
+        <section aria-labelledby="welcome-heading">
+            <h2 id="welcome-heading">Welcome to Bet Buddy</h2>
+            <p>Track your bets, analyze your performance, and make better decisions. Our accessible platform ensures everyone can benefit from data-driven insights.</p>
+        </section>
+        
+        <section aria-labelledby="add-bet-heading">
+            <h2 id="add-bet-heading">Add New Bet</h2>
+            <form id="bet-form" aria-label="Add new bet form">
+                <div class="form-group">
+                    <label for="bet-type">
+                        Bet Type <span class="required" aria-label="required">*</span>
+                    </label>
+                    <select id="bet-type" name="bet-type" required aria-required="true">
+                        <option value="">Select bet type</option>
+                        <option value="sports">Sports</option>
+                        <option value="horse-racing">Horse Racing</option>
+                        <option value="casino">Casino</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bet-amount">
+                        Bet Amount <span class="required" aria-label="required">*</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        id="bet-amount" 
+                        name="bet-amount" 
+                        required 
+                        aria-required="true"
+                        aria-describedby="bet-amount-help"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                    >
+                    <span id="bet-amount-help" class="help-text">Enter the amount you wagered</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bet-description">
+                        Description
+                    </label>
+                    <textarea 
+                        id="bet-description" 
+                        name="bet-description"
+                        rows="4"
+                        aria-describedby="bet-description-help"
+                        placeholder="Describe your bet..."
+                    ></textarea>
+                    <span id="bet-description-help" class="help-text">Optional: Add details about this bet</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bet-date">
+                        Date <span class="required" aria-label="required">*</span>
+                    </label>
+                    <input 
+                        type="date" 
+                        id="bet-date" 
+                        name="bet-date" 
+                        required 
+                        aria-required="true"
+                    >
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <span aria-hidden="true">✓</span> Add Bet
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        <span aria-hidden="true">✗</span> Clear Form
+                    </button>
+                </div>
+            </form>
+        </section>
+        
+        <section aria-labelledby="recent-bets-heading">
+            <h2 id="recent-bets-heading">Recent Bets</h2>
+            <div role="status" aria-live="polite" aria-atomic="true" class="sr-only" id="bet-status"></div>
+            
+            <table role="table" aria-label="Recent bets list">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Result</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <p>No bets recorded yet. Add your first bet above to get started!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section aria-labelledby="stats-heading">
+            <h2 id="stats-heading">Your Statistics</h2>
+            <div class="stats-grid">
+                <article class="stat-card" aria-labelledby="total-bets-label">
+                    <h3 id="total-bets-label">Total Bets</h3>
+                    <p class="stat-value" aria-label="Total number of bets">0</p>
+                </article>
+                
+                <article class="stat-card" aria-labelledby="win-rate-label">
+                    <h3 id="win-rate-label">Win Rate</h3>
+                    <p class="stat-value" aria-label="Win rate percentage">0%</p>
+                </article>
+                
+                <article class="stat-card" aria-labelledby="total-wagered-label">
+                    <h3 id="total-wagered-label">Total Wagered</h3>
+                    <p class="stat-value" aria-label="Total amount wagered">$0.00</p>
+                </article>
+                
+                <article class="stat-card" aria-labelledby="profit-loss-label">
+                    <h3 id="profit-loss-label">Profit/Loss</h3>
+                    <p class="stat-value" aria-label="Total profit or loss">$0.00</p>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer role="contentinfo">
+        <div class="footer-container">
+            <p>&copy; 2025 Bet Buddy. All rights reserved.</p>
+            <p>
+                <a href="#accessibility">Accessibility Statement</a> | 
+                <a href="#privacy">Privacy Policy</a> | 
+                <a href="#terms">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

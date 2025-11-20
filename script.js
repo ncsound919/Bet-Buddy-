@@ -245,7 +245,7 @@
     /**
      * Delete bet with confirmation
      */
-    window.deleteBet = function(id) {
+    window.deleteBet = function(id) { // eslint-disable-line no-unused-vars
         // Use native confirm for accessibility
         const confirmed = confirm('Are you sure you want to delete this bet?');
         if (!confirmed) return;
@@ -262,7 +262,7 @@
     /**
      * Edit bet (placeholder)
      */
-    window.editBet = function(id) {
+    window.editBet = function(id) { // eslint-disable-line no-unused-vars
         const bets = getBets();
         const bet = bets.find(b => b.id === id);
         if (!bet) return;

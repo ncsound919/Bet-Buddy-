@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+    command: npm run dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+    depends_on:
+      - backend
+
+# Uncomment when you add a database
+#  db:
+#    image: mongo:latest
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongo-data:/data/db
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=admin
+#      - MONGO_INITDB_ROOT_PASSWORD=password
+
+# volumes:
+#   mongo-data:

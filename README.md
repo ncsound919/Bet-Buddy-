@@ -22,21 +22,38 @@ Bet-Buddy-/
 
 ### Installation
 
+#### Option 1: Docker (Recommended)
+
+If you have Docker and Docker Compose installed:
+
+```bash
+git clone <repository-url>
+cd Bet-Buddy-
+docker-compose up
+```
+
+This will start both frontend and backend automatically!
+
+#### Option 2: Manual Installation
+
 1. Clone the repository:
    ```bash
    git clone <repository-url>
    cd Bet-Buddy-
    ```
 
-2. Install backend dependencies:
+2. Install all dependencies at once:
+   ```bash
+   npm run install:all
+   ```
+
+   Or install individually:
+   
    ```bash
    cd backend
    npm install
    cp .env.example .env
-   ```
-
-3. Install frontend dependencies:
-   ```bash
+   
    cd ../frontend
    npm install
    ```

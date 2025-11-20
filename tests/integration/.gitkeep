@@ -1,0 +1,6 @@
+# Integration tests will be added here
+# These tests will verify end-to-end flows like:
+# - User signup and login flow
+# - Bet entry and submission flow
+# - Bet detail viewing and updating
+# - Settings management

@@ -1,0 +1,29 @@
+{
+  "name": "bet-buddy",
+  "version": "1.0.0",
+  "description": "Learn from your own bets - An accessible betting tracking application",
+  "main": "index.html",
+  "scripts": {
+    "test:a11y": "pa11y-ci",
+    "lint": "eslint *.js",
+    "lint:fix": "eslint *.js --fix",
+    "audit:a11y": "axe --exit src/*.html"
+  },
+  "keywords": [
+    "betting",
+    "tracking",
+    "accessible",
+    "a11y"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@axe-core/cli": "^4.8.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "pa11y-ci": "^3.1.0"
+  },
+  "dependencies": {
+    "axe-core": "^4.8.0"
+  }
+}

@@ -143,6 +143,13 @@ export function calculateStatisticsByPeriod(
 /**
  * Calculate Kelly Criterion for optimal bet sizing
  * Returns the fraction of bankroll to bet (0-1)
+ * 
+ * Formula: f* = (bp - q) / b
+ * Where:
+ *   f* = fraction of bankroll to bet
+ *   b = net odds (decimal odds - 1)
+ *   p = win probability
+ *   q = lose probability (1 - p)
  */
 export function calculateKellyCriterion(
   winProbability: number,
@@ -155,9 +162,10 @@ export function calculateKellyCriterion(
     throw new Error('Odds must be greater than 1');
   }
 
-  const q = 1 - winProbability;
+  const q = 1 - winProbability; // Lose probability
   const b = odds - 1; // Net odds
 
+  // Kelly formula: f* = (bp - q) / b
   const kellyCriterion = (b * winProbability - q) / b;
 
   // Return 0 if negative (no edge)

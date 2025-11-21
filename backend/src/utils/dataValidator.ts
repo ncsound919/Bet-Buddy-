@@ -101,6 +101,10 @@ export function validateDate(date: string | Date): ValidationResult {
   };
 }
 
+// Valid result values for bet outcomes
+const VALID_RESULT_VALUES = ['won', 'lost', 'win', 'lose', 'true', 'false', 'yes', 'no'];
+const WINNING_RESULT_VALUES = ['won', 'win', 'true', 'yes'];
+
 /**
  * Validate bet result (won/lost)
  */
@@ -111,7 +115,7 @@ export function validateBetResult(result: boolean | string): ValidationResult {
     // Valid
   } else if (typeof result === 'string') {
     const normalized = result.toLowerCase();
-    if (!['won', 'lost', 'win', 'lose', 'true', 'false', 'yes', 'no'].includes(normalized)) {
+    if (!VALID_RESULT_VALUES.includes(normalized)) {
       errors.push('Bet result must be won/lost, win/lose, yes/no, or true/false');
     }
   } else {
@@ -180,5 +184,5 @@ export function normalizeBetResult(result: boolean | string): boolean {
   }
 
   const normalized = result.toLowerCase();
-  return ['won', 'win', 'true', 'yes'].includes(normalized);
+  return WINNING_RESULT_VALUES.includes(normalized);
 }

@@ -97,6 +97,10 @@ function americanToDecimal(american: number): number {
   }
 }
 
+/**
+ * Find Greatest Common Divisor using Euclidean algorithm
+ * Used to simplify fractional odds to their lowest terms (e.g., 6/4 becomes 3/2)
+ */
 function findGCD(a: number, b: number): number {
   return b === 0 ? a : findGCD(b, a % b);
 }

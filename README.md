@@ -1,4 +1,4 @@
-# Bet-Buddy 🎲
+# Odds & Squads 🎲
 
 Learn from your own bets - A comprehensive application for tracking and analyzing your betting activities.
 
@@ -7,7 +7,7 @@ Learn from your own bets - A comprehensive application for tracking and analyzin
 This is a full-stack application with the following structure:
 
 ```
-Bet-Buddy-/
+O & S-/
 ├── frontend/          # React + TypeScript + Vite frontend
 ├── backend/           # Node.js + Express + TypeScript backend
 └── README.md
@@ -28,7 +28,7 @@ If you have Docker and Docker Compose installed:
 
 ```bash
 git clone <repository-url>
-cd Bet-Buddy-
+cd O & S-
 docker-compose up
 ```
 

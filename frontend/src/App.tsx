@@ -17,10 +17,10 @@ function App() {
     <div className="app-container">
       {/* Sports silhouettes background */}
       <div className="sports-background">
-        <img src={basketballIcon} alt="" className="basketball" style={{ '--initial-rotate': '15deg' } as React.CSSProperties} />
-        <img src={footballIcon} alt="" className="football" style={{ '--initial-rotate': '-25deg' } as React.CSSProperties} />
-        <img src={baseballIcon} alt="" className="baseball" style={{ '--initial-rotate': '45deg' } as React.CSSProperties} />
-        <img src={soccerIcon} alt="" className="soccer" style={{ '--initial-rotate': '-15deg' } as React.CSSProperties} />
+        <img src={basketballIcon} alt="" className="basketball" />
+        <img src={footballIcon} alt="" className="football" />
+        <img src={baseballIcon} alt="" className="baseball" />
+        <img src={soccerIcon} alt="" className="soccer" />
       </div>
 
       {/* Hero Section */}

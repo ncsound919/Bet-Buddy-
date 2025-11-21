@@ -24,9 +24,8 @@
   pointer-events: none;
 }
 
-.sports-background svg {
+.sports-background img {
   position: absolute;
-  color: var(--espn-text-primary);
   filter: blur(2px);
 }
 
@@ -35,8 +34,7 @@
   height: 350px;
   top: 10%;
   right: -50px;
-  transform: rotate(15deg);
-  animation: float 20s ease-in-out infinite;
+  animation: floatBasketball 20s ease-in-out infinite;
 }
 
 .sports-background .football {
@@ -44,8 +42,7 @@
   height: 300px;
   bottom: 15%;
   left: -30px;
-  transform: rotate(-25deg);
-  animation: float 15s ease-in-out infinite reverse;
+  animation: floatFootball 15s ease-in-out infinite;
 }
 
 .sports-background .baseball {
@@ -53,8 +50,7 @@
   height: 250px;
   top: 50%;
   left: 15%;
-  transform: rotate(45deg);
-  animation: float 25s ease-in-out infinite;
+  animation: floatBaseball 25s ease-in-out infinite;
 }
 
 .sports-background .soccer {
@@ -62,16 +58,42 @@
   height: 280px;
   bottom: 20%;
   right: 10%;
-  transform: rotate(-15deg);
-  animation: float 18s ease-in-out infinite reverse;
+  animation: floatSoccer 18s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes floatBasketball {
   0%, 100% {
-    transform: translateY(0) rotate(var(--initial-rotate, 0deg));
+    transform: translateY(0) rotate(15deg);
   }
   50% {
-    transform: translateY(-30px) rotate(calc(var(--initial-rotate, 0deg) + 10deg));
+    transform: translateY(-30px) rotate(25deg);
+  }
+}
+
+@keyframes floatFootball {
+  0%, 100% {
+    transform: translateY(0) rotate(-25deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(-15deg);
+  }
+}
+
+@keyframes floatBaseball {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(55deg);
+  }
+}
+
+@keyframes floatSoccer {
+  0%, 100% {
+    transform: translateY(0) rotate(-15deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(-5deg);
   }
 }
 

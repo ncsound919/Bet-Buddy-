@@ -161,8 +161,10 @@ export function exportToMarkdown(bets: BetRecord[]): string {
     .map((bet) => {
       const values = keys.map((key) => {
         const value = bet[key];
-        // Escape pipe characters
-        return String(value ?? '').replace(/\|/g, '\\|');
+        // Escape backslashes first, then pipe characters
+        return String(value ?? '')
+          .replace(/\\/g, '\\\\')
+          .replace(/\|/g, '\\|');
       });
       return `| ${values.join(' | ')} |`;
     })

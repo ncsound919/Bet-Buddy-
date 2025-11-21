@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
@@ -34,12 +34,12 @@ function ScreenshotOCR() {
   const [ocrConfigured, setOcrConfigured] = useState<boolean | null>(null);
 
   // Check if OCR is configured on mount
-  useState(() => {
+  useEffect(() => {
     fetch(`${API_BASE}/ocr/status`)
       .then(res => res.json())
       .then(data => setOcrConfigured(data.configured))
       .catch(() => setOcrConfigured(false));
-  });
+  }, []);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

@@ -127,11 +127,12 @@ function extractOddsFromText(lines: string[]): ExtractedOdds[] {
     // Skip empty lines
     if (!text) continue;
 
-    // Check for American odds (e.g., +150, -110)
-    const americanMatch = text.match(/([+-])(\d{3,})/g);
+    // Check for American odds (e.g., +150, -110, +100)
+    const americanMatch = text.match(/([+-])(\d{2,})/g);
     if (americanMatch) {
       for (const match of americanMatch) {
         const value = parseInt(match);
+        // American odds should be >= 100 or <= -100
         if (Math.abs(value) >= 100) {
           extractedOdds.push({
             text: match,
@@ -196,7 +197,8 @@ export function parseOddsFromOCR(ocrResult: OCRResult): {
       if (odd.value > 0) {
         decimal = odd.value / 100 + 1;
       } else {
-        decimal = 1 - 100 / odd.value;
+        // For negative American odds: decimal = 1 + (100 / abs(americanOdds))
+        decimal = 1 + 100 / Math.abs(odd.value);
       }
     } else if (odd.format === 'fractional' && odd.value) {
       decimal = odd.value + 1;

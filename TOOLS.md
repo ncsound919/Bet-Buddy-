@@ -8,7 +8,51 @@ These tools add powerful functionality to Bet Buddy without bloat or overreach. 
 
 ## 🛠️ Available Tools
 
-### 1. 📊 Odds Calculator
+### 1. 📷 Screenshot OCR (Azure Computer Vision)
+
+Extract betting odds from screenshots automatically using Azure Computer Vision.
+
+**Features:**
+- Upload betting screenshots (DraftKings, FanDuel, etc.)
+- Automatically extract odds in multiple formats (American, Decimal, Fractional)
+- Parse and convert extracted odds to decimal format
+- Confidence scoring for extraction accuracy
+- Works with Android apps via file upload
+
+**API Endpoints:**
+- `POST /api/ocr/extract` - Upload and extract odds from screenshot
+- `GET /api/ocr/status` - Check if Azure credentials are configured
+
+**Setup:**
+1. Create an Azure Computer Vision resource at [Azure Portal](https://portal.azure.com/)
+2. Copy your endpoint and key
+3. Add to backend `.env` file:
+   ```
+   AZURE_VISION_ENDPOINT=https://your-resource.cognitiveservices.azure.com/
+   AZURE_VISION_KEY=your-subscription-key
+   ```
+
+**Example Usage:**
+```bash
+curl -X POST http://localhost:3001/api/ocr/extract \
+  -F "image=@screenshot.jpg"
+
+# Response:
+# {
+#   "success": true,
+#   "extractedOdds": [
+#     {"text": "+150", "value": 150, "format": "american", "confidence": 0.9}
+#   ],
+#   "parsedOdds": [
+#     {"original": "+150", "decimal": 2.5, "format": "american"}
+#   ],
+#   "confidence": 0.9
+# }
+```
+
+**Note:** Requires Azure subscription. Free tier includes 5,000 transactions/month.
+
+### 2. 📊 Odds Calculator
 
 Convert between different odds formats and calculate potential returns and profits.
 
@@ -40,7 +84,7 @@ curl -X POST http://localhost:3001/api/tools/odds/convert/decimal \
 # }
 ```
 
-### 2. 📈 Statistics Engine
+### 3. 📈 Statistics Engine
 
 Calculate comprehensive betting performance metrics and advanced statistics.
 
@@ -74,7 +118,7 @@ curl -X POST http://localhost:3001/api/tools/statistics/calculate \
 # - longestWinStreak, longestLoseStreak, currentStreak
 ```
 
-### 3. ✅ Data Validator
+### 4. ✅ Data Validator
 
 Validate betting data before saving to ensure data integrity.
 
@@ -108,7 +152,7 @@ curl -X POST http://localhost:3001/api/tools/validate/bet \
 # }
 ```
 
-### 4. 💾 Data Exporter
+### 5. 💾 Data Exporter
 
 Export betting data in multiple formats for analysis or backup.
 
@@ -139,7 +183,7 @@ curl -X POST http://localhost:3001/api/tools/export \
 # 2024-01-01,10,2,true,10
 ```
 
-### 5. 🎨 Data Formatter
+### 6. 🎨 Data Formatter
 
 Format data for display with proper localization and styling.
 
@@ -260,20 +304,25 @@ All tools include input validation and error handling:
 - Dates cannot be in the future
 - All user input is sanitized before processing
 
-## 📦 No Dependencies
+## 📦 Dependencies
 
-These tools are implemented using only:
-- **TypeScript** - Type safety
-- **Standard JavaScript APIs** - No external libraries
-- **Node.js built-ins** - For backend functionality
-- **React** - For frontend components (already in the project)
+These tools are implemented with minimal dependencies:
 
-This approach ensures:
+**Core Tools (1-5):** Pure TypeScript with no external dependencies
 - ✅ **Zero bloat** - No unnecessary dependencies
 - ✅ **Fast performance** - No overhead from external libraries
 - ✅ **Easy maintenance** - Pure TypeScript code
-- ✅ **Full control** - Complete understanding of functionality
-- ✅ **No licensing issues** - MIT license compatible
+
+**Screenshot OCR (Tool 6):** Azure Computer Vision integration
+- `@azure/cognitiveservices-computervision` - Azure SDK for OCR
+- `@azure/ms-rest-js` - Azure authentication
+- `multer` - File upload handling
+
+Benefits:
+- ✅ **Accurate OCR** - Industry-leading text recognition
+- ✅ **Microsoft 365 ecosystem** - Integrates with Azure
+- ✅ **Free tier available** - 5,000 transactions/month
+- ✅ **Enterprise ready** - Scalable and reliable
 
 ## 🧪 Testing
 

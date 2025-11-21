@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import toolsRouter from './routes/tools';
+import ocrRouter from './routes/ocr';
 
 dotenv.config();
 
@@ -25,6 +26,9 @@ app.get('/api', (_req: Request, res: Response) => {
 
 // Tools API routes
 app.use('/api/tools', toolsRouter);
+
+// OCR API routes
+app.use('/api/ocr', ocrRouter);
 
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: any) => {

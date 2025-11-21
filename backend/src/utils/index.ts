@@ -1,7 +1,6 @@
 /**
  * Bet Buddy Utility Tools
- * Collection of open-source tools to enhance betting tracking functionality
- * All tools are implemented without external dependencies
+ * Collection of tools to enhance betting tracking functionality
  */
 
 // Odds Calculator - Convert between odds formats and calculate returns
@@ -18,3 +17,6 @@ export * from './dataExporter';
 
 // Data Formatter - Format data for display
 export * from './dataFormatter';
+
+// Azure OCR - Extract text and odds from screenshots (requires Azure Computer Vision)
+export * from './azureOCR';

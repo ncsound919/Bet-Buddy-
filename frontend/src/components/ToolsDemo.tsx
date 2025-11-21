@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import ScreenshotOCR from './ScreenshotOCR';
 
 // Use environment variable or fallback to localhost for development
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/tools';
 
 function ToolsDemo() {
-  const [activeTab, setActiveTab] = useState<'odds' | 'stats' | 'validator' | 'export'>('odds');
+  const [activeTab, setActiveTab] = useState<'odds' | 'stats' | 'validator' | 'export' | 'ocr'>('odds');
   const [result, setResult] = useState<string>('');
 
   // Odds Calculator Demo
@@ -138,6 +139,20 @@ function ToolsDemo() {
 
       <div style={{ marginBottom: '20px' }}>
         <button
+          onClick={() => setActiveTab('ocr')}
+          style={{
+            padding: '10px 20px',
+            marginRight: '10px',
+            backgroundColor: activeTab === 'ocr' ? '#4CAF50' : '#ddd',
+            color: activeTab === 'ocr' ? 'white' : 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          📷 Screenshot OCR
+        </button>
+        <button
           onClick={() => setActiveTab('odds')}
           style={{
             padding: '10px 20px',
@@ -193,6 +208,12 @@ function ToolsDemo() {
           Data Exporter
         </button>
       </div>
+
+      {activeTab === 'ocr' && (
+        <div>
+          <ScreenshotOCR />
+        </div>
+      )}
 
       {activeTab === 'odds' && (
         <div>

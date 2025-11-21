@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import toolsRouter from './routes/tools';
+import ocrRouter from './routes/ocr';
 
 dotenv.config();
 
@@ -17,10 +19,16 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// API routes will be added here
+// API routes
 app.get('/api', (_req: Request, res: Response) => {
   res.json({ message: 'Bet Buddy API is running' });
 });
+
+// Tools API routes
+app.use('/api/tools', toolsRouter);
+
+// OCR API routes
+app.use('/api/ocr', ocrRouter);
 
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: any) => {

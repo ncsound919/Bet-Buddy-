@@ -1,133 +1,37 @@
-# Odds & Squads 🎲
+# Parlay Formula Project
 
-Learn from your own bets - A comprehensive application for tracking and analyzing your betting activities.
+Batch daily odds you collect into `slate.csv`, then run portfolio builds and TapSpeak summaries.
 
-## 🏗️ Project Structure
+## Files
+- `slate.csv` — your collected odds for the day. See `slate.sample.csv` for schema.
+- `config.json` — parameters for payout targets and ticket counts.
+- `main.py` — runs selection, builds moonshot and spray tickets, writes outputs to CSV.
 
-This is a full-stack application with the following structure:
-
-```
-O & S-/
-├── frontend/          # React + TypeScript + Vite frontend
-├── backend/           # Node.js + Express + TypeScript backend
-└── README.md
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-#### Option 1: Docker (Recommended)
-
-If you have Docker and Docker Compose installed:
-
+## Quick start
+1) Paste your slate into `slate.csv` with the headers shown below.
+2) Edit `config.json` if you want different targets.
+3) Run:
 ```bash
-git clone <repository-url>
-cd O & S-
-docker-compose up
+python main.py
 ```
+Outputs:
+- `tickets_moonshot.csv`
+- `tickets_spray.csv`
+- `legs_scored.csv`
 
-This will start both frontend and backend automatically!
-
-#### Option 2: Manual Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd Bet-Buddy-
-   ```
-
-2. Install all dependencies at once:
-   ```bash
-   npm run install:all
-   ```
-
-   Or install individually:
-   
-   ```bash
-   cd backend
-   npm install
-   cp .env.example .env
-   
-   cd ../frontend
-   npm install
-   ```
-
-### Development
-
-#### Backend
-
-```bash
-cd backend
-npm run dev        # Start development server with hot reload
-npm run build      # Build for production
-npm run start      # Start production server
-npm run lint       # Run ESLint
-npm run format     # Format code with Prettier
+## CSV schema: `slate.csv`
 ```
-
-The backend server will run on `http://localhost:3001`
-
-#### Frontend
-
-```bash
-cd frontend
-npm run dev        # Start development server
-npm run build      # Build for production
-npm run preview    # Preview production build
-npm run lint       # Run ESLint
+leg_id,sport,game,market,selection,decimal_odds,model_prob
+L1,NBA,MIL@WAS,ML,Bucks,1.28,0.83
+L2,NBA,UTA@LAC,ML,Clippers,1.29,0.80
+L3,NBA,TOR@ATL,Spread,Hawks -6,1.91,0.56
+L4,NBA,CLE@NYK,ML,Knicks,1.57,0.64
+L5,NBA,GSW@LAL,Total,Over 225.5,1.91,0.54
 ```
+- `decimal_odds` are *book* decimal odds you observed.
+- `model_prob` is your probability from *your* formulas (0–1). Leave blank if unknown; the tool will skip those legs.
 
-The frontend will run on `http://localhost:5173`
-
-## 📁 Backend Structure
-
-```
-backend/
-├── src/
-│   ├── routes/        # API routes
-│   ├── controllers/   # Request handlers
-│   ├── models/        # Data models
-│   ├── middleware/    # Express middleware
-│   ├── config/        # Configuration files
-│   ├── utils/         # Utility functions
-│   └── server.ts      # Entry point
-├── dist/              # Compiled JavaScript (generated)
-└── package.json
-```
-
-## 📁 Frontend Structure
-
-```
-frontend/
-├── src/
-│   ├── components/    # React components
-│   ├── assets/        # Static assets
-│   ├── App.tsx        # Main App component
-│   └── main.tsx       # Entry point
-├── public/            # Public assets
-└── package.json
-```
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **ESLint** - Code linting
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express** - Web framework
-- **TypeScript** - Type safety
-- **ESLint & Prettier** - Code quality
-
-## 📝 License
-
-MIT
+## Notes
+- The tool never scrapes the web. You paste odds you collected.
+- Only moneyline, spreads, totals are supported.
+- All outputs are math-only and neutral.

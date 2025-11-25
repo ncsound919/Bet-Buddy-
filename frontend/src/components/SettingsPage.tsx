@@ -12,7 +12,7 @@ interface SettingsPageProps {
 }
 
 function SettingsPage({ onClose }: SettingsPageProps) {
-  const { state, updateToolSettings, updateAPIIntegration } = useApp();
+  const { state, dispatch, updateToolSettings, updateAPIIntegration } = useApp();
   const [activeSection, setActiveSection] = useState<'tools' | 'integrations' | 'appearance'>('tools');
   const [editingIntegration, setEditingIntegration] = useState<string | null>(null);
   const [apiKeyInput, setApiKeyInput] = useState('');
@@ -320,21 +320,34 @@ function SettingsPage({ onClose }: SettingsPageProps) {
 
               {editingIntegration === integration.id ? (
                 <div style={{ marginTop: '12px' }}>
+                  <label htmlFor={`api-key-${integration.id}`} style={{ display: 'block', color: '#888', fontSize: '12px', marginBottom: '4px' }}>
+                    API Key
+                  </label>
                   <input
+                    id={`api-key-${integration.id}`}
                     style={styles.input}
                     type="password"
-                    placeholder="API Key"
+                    placeholder="Enter your API key"
                     value={apiKeyInput}
                     onChange={(e) => setApiKeyInput(e.target.value)}
                   />
+                  <div style={{ color: '#b26a00', fontSize: '12px', marginBottom: '8px' }}>
+                    ⚠️ Your API key will be stored locally in your browser without encryption.
+                  </div>
                   {integration.type !== 'gmail' && (
-                    <input
-                      style={styles.input}
-                      type="text"
-                      placeholder="Endpoint URL"
-                      value={endpointInput}
-                      onChange={(e) => setEndpointInput(e.target.value)}
-                    />
+                    <>
+                      <label htmlFor={`endpoint-${integration.id}`} style={{ display: 'block', color: '#888', fontSize: '12px', marginBottom: '4px' }}>
+                        Endpoint URL
+                      </label>
+                      <input
+                        id={`endpoint-${integration.id}`}
+                        style={styles.input}
+                        type="text"
+                        placeholder="Enter endpoint URL"
+                        value={endpointInput}
+                        onChange={(e) => setEndpointInput(e.target.value)}
+                      />
+                    </>
                   )}
                   <div style={{ marginTop: '8px' }}>
                     <button
@@ -374,7 +387,7 @@ function SettingsPage({ onClose }: SettingsPageProps) {
             </div>
             <button
               style={styles.toggle(state.settings.soundEnabled)}
-              onClick={() => {}} // Sound toggle functionality
+              onClick={() => dispatch({ type: 'TOGGLE_SOUND', enabled: !state.settings.soundEnabled })}
               aria-label="Toggle sound"
             >
               <div style={styles.toggleKnob(state.settings.soundEnabled)} />
@@ -387,7 +400,7 @@ function SettingsPage({ onClose }: SettingsPageProps) {
             </div>
             <button
               style={styles.toggle(state.settings.notifications)}
-              onClick={() => {}} // Notifications toggle functionality
+              onClick={() => dispatch({ type: 'TOGGLE_NOTIFICATIONS', enabled: !state.settings.notifications })}
               aria-label="Toggle notifications"
             >
               <div style={styles.toggleKnob(state.settings.notifications)} />
@@ -399,13 +412,14 @@ function SettingsPage({ onClose }: SettingsPageProps) {
               <div style={styles.settingDesc}>Choose your preferred color theme</div>
             </div>
             <select
+              id="theme-select"
               style={{
                 ...styles.input,
                 width: 'auto',
                 marginBottom: 0,
               }}
               value={state.settings.theme}
-              onChange={() => {}} // Theme change functionality
+              onChange={(e) => dispatch({ type: 'SET_THEME', theme: e.target.value as 'light' | 'dark' | 'system' })}
             >
               <option value="dark">Dark</option>
               <option value="light">Light</option>

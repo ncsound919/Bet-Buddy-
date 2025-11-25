@@ -27,6 +27,7 @@ type AppAction =
   | { type: 'UNLOCK_GAME'; gameId: string }
   | { type: 'SET_THEME'; theme: 'light' | 'dark' | 'system' }
   | { type: 'TOGGLE_SOUND'; enabled: boolean }
+  | { type: 'TOGGLE_NOTIFICATIONS'; enabled: boolean }
   | { type: 'LOAD_STATE'; state: AppState };
 
 // Reducer
@@ -178,6 +179,12 @@ function appReducer(state: AppState, action: AppAction): AppState {
       return {
         ...state,
         settings: { ...state.settings, soundEnabled: action.enabled },
+      };
+
+    case 'TOGGLE_NOTIFICATIONS':
+      return {
+        ...state,
+        settings: { ...state.settings, notifications: action.enabled },
       };
 
     case 'LOAD_STATE':

@@ -148,7 +148,7 @@ router.post('/bet', (req: Request, res: Response) => {
   const newBalance = currentBalance - amount;
   userBalances.set(userId, newBalance);
 
-  const betId = `bet-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const betId = `bet-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   const potentialPayout = Math.round(amount * odds);
 
   res.json({

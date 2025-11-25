@@ -381,7 +381,7 @@ function BaseballGame({ gameInfo, onClose }: BaseballGameProps) {
         width: '20px',
         height: '20px',
         backgroundColor: occupied ? '#FFD700' : '#444',
-        transform: `rotate(45deg) ${positionStyle.transform || ''}`,
+        transform: positionStyle.transform ? `rotate(45deg) ${positionStyle.transform}` : 'rotate(45deg)',
         top: positionStyle.top,
         left: positionStyle.left,
         right: positionStyle.right,

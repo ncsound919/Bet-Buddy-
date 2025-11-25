@@ -30,6 +30,16 @@ import {
   formatOdds,
   formatDate,
 } from '../utils/dataFormatter';
+import {
+  calculateSuggestedStake,
+  calculateFlatStake,
+  calculateUnitSize,
+  checkBettingLimits,
+  calculateStopLevels,
+  getResponsibleGamblingTips,
+  evaluateBettingSession,
+  BankrollConfig,
+} from '../utils/bankrollManager';
 
 const router = Router();
 
@@ -290,6 +300,120 @@ router.post('/format/date', (req: Request, res: Response) => {
   }
 });
 
+// Bankroll Management Endpoints
+router.post('/bankroll/suggested-stake', (req: Request, res: Response) => {
+  try {
+    const { bankroll, odds, estimatedWinProbability, riskTolerance = 'moderate' } = req.body;
+    if (!bankroll || !odds || !estimatedWinProbability) {
+      res.status(400).json({ error: 'Bankroll, odds, and estimatedWinProbability are required' });
+      return;
+    }
+    const result = calculateSuggestedStake(
+      Number(bankroll),
+      Number(odds),
+      Number(estimatedWinProbability),
+      riskTolerance
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/bankroll/flat-stake', (req: Request, res: Response) => {
+  try {
+    const { bankroll, riskTolerance = 'moderate' } = req.body;
+    if (!bankroll) {
+      res.status(400).json({ error: 'Bankroll is required' });
+      return;
+    }
+    const stake = calculateFlatStake(Number(bankroll), riskTolerance);
+    res.json({
+      bankroll: Number(bankroll),
+      riskTolerance,
+      suggestedStake: stake,
+      unitsPerBankroll: Math.round(Number(bankroll) / stake),
+    });
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/bankroll/unit-size', (req: Request, res: Response) => {
+  try {
+    const { bankroll, unitsInBankroll = 100 } = req.body;
+    if (!bankroll) {
+      res.status(400).json({ error: 'Bankroll is required' });
+      return;
+    }
+    const unitSize = calculateUnitSize(Number(bankroll), Number(unitsInBankroll));
+    res.json({
+      bankroll: Number(bankroll),
+      unitsInBankroll: Number(unitsInBankroll),
+      unitSize,
+    });
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/bankroll/check-limits', (req: Request, res: Response) => {
+  try {
+    const { stake, config, currentDailyWagered = 0, currentWeeklyWagered = 0, currentMonthlyWagered = 0 } = req.body;
+    if (!stake || !config) {
+      res.status(400).json({ error: 'Stake and config are required' });
+      return;
+    }
+    const result = checkBettingLimits(
+      Number(stake),
+      config as BankrollConfig,
+      Number(currentDailyWagered),
+      Number(currentWeeklyWagered),
+      Number(currentMonthlyWagered)
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/bankroll/stop-levels', (req: Request, res: Response) => {
+  try {
+    const { bankroll, riskTolerance = 'moderate' } = req.body;
+    if (!bankroll) {
+      res.status(400).json({ error: 'Bankroll is required' });
+      return;
+    }
+    const result = calculateStopLevels(Number(bankroll), riskTolerance);
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.get('/bankroll/responsible-gambling', (_req: Request, res: Response) => {
+  try {
+    const tips = getResponsibleGamblingTips();
+    res.json(tips);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/bankroll/evaluate-session', (req: Request, res: Response) => {
+  try {
+    const { recentResults, bankroll, originalBankroll } = req.body;
+    if (!recentResults || bankroll === undefined || originalBankroll === undefined) {
+      res.status(400).json({ error: 'recentResults, bankroll, and originalBankroll are required' });
+      return;
+    }
+    const result = evaluateBettingSession(recentResults, Number(bankroll), Number(originalBankroll));
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
 // Tools listing endpoint
 router.get('/', (_req: Request, res: Response) => {
   res.json({
@@ -330,6 +454,18 @@ router.get('/', (_req: Request, res: Response) => {
           'POST /api/tools/format/odds',
           'POST /api/tools/format/date',
         ],
+      },
+      bankrollManager: {
+        endpoints: [
+          'POST /api/tools/bankroll/suggested-stake',
+          'POST /api/tools/bankroll/flat-stake',
+          'POST /api/tools/bankroll/unit-size',
+          'POST /api/tools/bankroll/check-limits',
+          'POST /api/tools/bankroll/stop-levels',
+          'GET /api/tools/bankroll/responsible-gambling',
+          'POST /api/tools/bankroll/evaluate-session',
+        ],
+        description: 'Bankroll management and responsible gambling tools',
       },
     },
   });

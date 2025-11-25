@@ -331,6 +331,9 @@ function SettingsPage({ onClose }: SettingsPageProps) {
                     value={apiKeyInput}
                     onChange={(e) => setApiKeyInput(e.target.value)}
                   />
+                  <div style={{ color: '#b26a00', fontSize: '0.95em', marginTop: '4px' }}>
+                    ⚠️ Your API key will be stored locally in your browser <b>without encryption</b>.
+                  </div>
                   <div style={{ color: '#b26a00', fontSize: '12px', marginBottom: '8px' }}>
                     ⚠️ Your API key will be stored locally in your browser without encryption.
                   </div>

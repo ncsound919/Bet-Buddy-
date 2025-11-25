@@ -51,8 +51,8 @@ Odds also tell you the bookmaker's estimated probability:
 
 ### Moneyline (Match Winner)
 Simply pick who wins. No point spread involved.
-- Favorites have negative odds (higher risk, lower reward)
-- Underdogs have positive odds (lower risk, higher reward)
+- Favorites have negative odds (lower risk, lower reward - more likely to win but pay less)
+- Underdogs have positive odds (higher risk, higher reward - less likely to win but pay more)
 
 ### Point Spread
 The favorite must win by more than the spread, or the underdog must lose by less than the spread (or win).

@@ -49,6 +49,12 @@ const RISK_MULTIPLIERS: Record<string, number> = {
 };
 
 /**
+ * Maximum stake multiplier - allows up to 2x the base risk percentage
+ * This caps aggressive staking to prevent excessive risk
+ */
+const MAX_STAKE_MULTIPLIER = 2;
+
+/**
  * Calculate suggested stake based on Kelly Criterion and risk tolerance
  * Uses a fractional Kelly approach for safety
  */
@@ -65,7 +71,7 @@ export function calculateSuggestedStake(
     throw new Error('Odds must be greater than 1');
   }
   if (estimatedWinProbability <= 0 || estimatedWinProbability >= 1) {
-    throw new Error('Estimated win probability must be between 0 and 1');
+    throw new Error('Estimated win probability must be between 0 and 1 (exclusive)');
   }
 
   // Calculate full Kelly stake
@@ -86,7 +92,7 @@ export function calculateSuggestedStake(
 
   // Apply maximum stake limits based on risk tolerance
   const maxMultiplier = RISK_MULTIPLIERS[riskTolerance] || 0.02;
-  const maxStake = bankroll * maxMultiplier * 2; // Allow up to 2x the base risk
+  const maxStake = bankroll * maxMultiplier * MAX_STAKE_MULTIPLIER;
   const minStake = Math.max(1, bankroll * 0.001); // Minimum $1 or 0.1% of bankroll
 
   // Clamp stake within limits
@@ -99,8 +105,8 @@ export function calculateSuggestedStake(
   if (fullKelly <= 0) {
     reasoning = 'No positive edge detected. Consider skipping this bet or reducing stake.';
     suggestedStake = minStake;
-  } else if (fullKelly > maxMultiplier * 2) {
-    reasoning = `High edge detected, but stake capped at ${(maxMultiplier * 200).toFixed(0)}% of bankroll for safety.`;
+  } else if (fullKelly > maxMultiplier * MAX_STAKE_MULTIPLIER) {
+    reasoning = `High edge detected, but stake capped at ${(maxMultiplier * MAX_STAKE_MULTIPLIER * 100).toFixed(0)}% of bankroll for safety.`;
   } else {
     reasoning = `Based on ${(kellyFraction * 100).toFixed(0)}% Kelly Criterion with ${riskTolerance} risk profile.`;
   }

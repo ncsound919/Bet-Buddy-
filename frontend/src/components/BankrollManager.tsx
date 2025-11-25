@@ -37,13 +37,20 @@ function BankrollManager() {
   const [activeTab, setActiveTab] = useState<'calculator' | 'limits' | 'tips'>('calculator');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
+  const [tipsLoadError, setTipsLoadError] = useState(false);
 
   // Fetch responsible gambling tips on mount
   useEffect(() => {
     fetch(`${API_BASE}/bankroll/responsible-gambling`)
       .then((res) => res.json())
-      .then((data) => setResponsibleGamblingData(data))
-      .catch(() => console.error('Failed to fetch responsible gambling tips'));
+      .then((data) => {
+        setResponsibleGamblingData(data);
+        setTipsLoadError(false);
+      })
+      .catch(() => {
+        console.error('Failed to fetch responsible gambling tips');
+        setTipsLoadError(true);
+      });
   }, []);
 
   const calculateStakes = async () => {
@@ -118,6 +125,15 @@ function BankrollManager() {
       default:
         return '#888';
     }
+  };
+
+  /**
+   * Calculate expected value for a bet
+   */
+  const calculateExpectedValue = (stake: number, decimalOdds: number, probability: number) => {
+    const ev = probability * stake * (decimalOdds - 1) - (1 - probability) * stake;
+    const evPercent = (ev / stake) * 100;
+    return { ev, evPercent };
   };
 
   return (
@@ -386,11 +402,11 @@ function BankrollManager() {
                   📈 Expected Value
                 </h3>
                 {(() => {
-                  const p = parseFloat(winProbability);
-                  const o = parseFloat(odds);
-                  const stake = stakeSuggestion.suggestedStake;
-                  const ev = p * stake * (o - 1) - (1 - p) * stake;
-                  const evPercent = (ev / stake) * 100;
+                  const { ev, evPercent } = calculateExpectedValue(
+                    stakeSuggestion.suggestedStake,
+                    parseFloat(odds),
+                    parseFloat(winProbability)
+                  );
                   return (
                     <>
                       <div
@@ -590,6 +606,27 @@ function BankrollManager() {
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'tips' && tipsLoadError && !responsibleGamblingData && (
+        <div
+          style={{
+            padding: '20px',
+            backgroundColor: '#fff3cd',
+            border: '1px solid #ffc107',
+            borderRadius: '8px',
+          }}
+        >
+          <h3 style={{ margin: '0 0 10px 0' }}>⚠️ Unable to Load Tips</h3>
+          <p style={{ margin: 0, color: '#666' }}>
+            Failed to load responsible gambling tips. Please ensure the backend server is running.
+            In the meantime, remember: never bet more than you can afford to lose, and if gambling
+            stops being fun, seek help at{' '}
+            <a href="https://www.ncpgambling.org/" target="_blank" rel="noopener noreferrer">
+              ncpgambling.org
+            </a>.
+          </p>
         </div>
       )}
     </div>

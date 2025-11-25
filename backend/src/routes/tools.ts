@@ -304,7 +304,7 @@ router.post('/format/date', (req: Request, res: Response) => {
 router.post('/bankroll/suggested-stake', (req: Request, res: Response) => {
   try {
     const { bankroll, odds, estimatedWinProbability, riskTolerance = 'moderate' } = req.body;
-    if (!bankroll || !odds || !estimatedWinProbability) {
+    if (bankroll == null || odds == null || estimatedWinProbability == null) {
       res.status(400).json({ error: 'Bankroll, odds, and estimatedWinProbability are required' });
       return;
     }
@@ -323,7 +323,7 @@ router.post('/bankroll/suggested-stake', (req: Request, res: Response) => {
 router.post('/bankroll/flat-stake', (req: Request, res: Response) => {
   try {
     const { bankroll, riskTolerance = 'moderate' } = req.body;
-    if (!bankroll) {
+    if (bankroll == null) {
       res.status(400).json({ error: 'Bankroll is required' });
       return;
     }
@@ -342,7 +342,7 @@ router.post('/bankroll/flat-stake', (req: Request, res: Response) => {
 router.post('/bankroll/unit-size', (req: Request, res: Response) => {
   try {
     const { bankroll, unitsInBankroll = 100 } = req.body;
-    if (!bankroll) {
+    if (bankroll == null) {
       res.status(400).json({ error: 'Bankroll is required' });
       return;
     }
@@ -360,7 +360,7 @@ router.post('/bankroll/unit-size', (req: Request, res: Response) => {
 router.post('/bankroll/check-limits', (req: Request, res: Response) => {
   try {
     const { stake, config, currentDailyWagered = 0, currentWeeklyWagered = 0, currentMonthlyWagered = 0 } = req.body;
-    if (!stake || !config) {
+    if (stake == null || config == null) {
       res.status(400).json({ error: 'Stake and config are required' });
       return;
     }
@@ -380,7 +380,7 @@ router.post('/bankroll/check-limits', (req: Request, res: Response) => {
 router.post('/bankroll/stop-levels', (req: Request, res: Response) => {
   try {
     const { bankroll, riskTolerance = 'moderate' } = req.body;
-    if (!bankroll) {
+    if (bankroll == null) {
       res.status(400).json({ error: 'Bankroll is required' });
       return;
     }

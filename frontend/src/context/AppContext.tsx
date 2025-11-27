@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import { createContext, useContext, useReducer, useEffect, useRef, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type {
   AppState,
@@ -16,6 +16,9 @@ import type {
 } from '../types';
 import { defaultAppState } from '../types';
 import { generateUniqueId } from '../utils/generateId';
+
+// Debounce delay for localStorage writes (in milliseconds)
+const STORAGE_DEBOUNCE_MS = 500;
 
 // Action types
 type AppAction =
@@ -247,11 +250,31 @@ function loadState(): AppState {
 // Provider component
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, null, loadState);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Save state to localStorage on changes
+  // Debounced save to localStorage - prevents performance issues during frequent updates
+  const saveToStorage = useCallback((stateToSave: AppState) => {
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    saveTimeoutRef.current = setTimeout(() => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+    }, STORAGE_DEBOUNCE_MS);
+  }, []);
+
+  // Save state to localStorage on changes (debounced)
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state]);
+    saveToStorage(state);
+    
+    // Cleanup timeout on unmount
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+        // Save immediately on unmount to prevent data loss
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+    };
+  }, [state, saveToStorage]);
 
   // Convenience methods
   const addSimVC = (amount: number, description: string) => {

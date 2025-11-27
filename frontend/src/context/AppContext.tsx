@@ -15,6 +15,7 @@ import type {
   GameInfo,
 } from '../types';
 import { defaultAppState } from '../types';
+import { generateUniqueId } from '../utils/generateId';
 
 // Action types
 type AppAction =
@@ -35,7 +36,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'ADD_SIMVC': {
       const transaction: SimVCTransaction = {
-        id: `tx-${Date.now()}`,
+        id: generateUniqueId('tx'),
         type: 'earn',
         amount: action.amount,
         description: action.description,
@@ -54,7 +55,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'SPEND_SIMVC': {
       if (state.simVC.amount < action.amount) return state;
       const transaction: SimVCTransaction = {
-        id: `tx-${Date.now()}`,
+        id: generateUniqueId('tx'),
         type: 'spend',
         amount: -action.amount,
         description: action.description,
@@ -96,7 +97,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'PLACE_BET': {
       if (state.simVC.amount < action.bet.amount) return state;
       const transaction: SimVCTransaction = {
-        id: `tx-${Date.now()}`,
+        id: generateUniqueId('tx'),
         type: 'spend',
         amount: -action.bet.amount,
         description: `Bet placed: ${action.bet.selection}`,
@@ -120,7 +121,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
       const winAmount = action.won ? bet.potentialPayout : 0;
       const transaction: SimVCTransaction = {
-        id: `tx-${Date.now()}`,
+        id: generateUniqueId('tx'),
         type: action.won ? 'bet_win' : 'bet_loss',
         amount: action.won ? winAmount : 0,
         description: action.won
@@ -148,7 +149,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
       if (!game || game.unlocked || state.simVC.amount < game.cost) return state;
 
       const transaction: SimVCTransaction = {
-        id: `tx-${Date.now()}`,
+        id: generateUniqueId('tx'),
         type: 'spend',
         amount: -game.cost,
         description: `Unlocked game: ${game.name}`,
@@ -267,7 +268,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (state.simVC.amount < bet.amount) return false;
     const fullBet: SimBet = {
       ...bet,
-      id: `bet-${Date.now()}`,
+      id: generateUniqueId('bet'),
       status: 'pending',
       timestamp: new Date(),
     };

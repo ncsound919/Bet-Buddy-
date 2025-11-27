@@ -6,6 +6,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import type { GameInfo, BasketballGameState, TeamStats } from '../types';
+import { generateUniqueId } from '../utils/generateId';
 
 interface BasketballGameProps {
   gameInfo: GameInfo;
@@ -173,7 +174,7 @@ function BasketballGame({ gameInfo, onClose }: BasketballGameProps) {
     });
 
     if (success) {
-      setCurrentBetId(`bet-${Date.now()}`);
+      setCurrentBetId(generateUniqueId('bet'));
       setShowBetting(false);
       initGame();
     }

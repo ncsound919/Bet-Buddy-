@@ -215,6 +215,80 @@ curl -X POST http://localhost:3001/api/tools/format/currency \
 # }
 ```
 
+### 7. 💰 Bankroll Manager
+
+Manage your betting bankroll responsibly with stake sizing tools and responsible gambling features.
+
+**Features:**
+- Calculate suggested stakes using fractional Kelly Criterion
+- Calculate flat stakes based on risk tolerance
+- Set and check betting limits (daily, weekly, monthly)
+- Calculate stop-loss and take-profit levels
+- Get responsible gambling tips and resources
+- Evaluate betting sessions for tilt detection
+
+**API Endpoints:**
+- `POST /api/tools/bankroll/suggested-stake` - Calculate optimal stake using Kelly Criterion
+- `POST /api/tools/bankroll/flat-stake` - Calculate fixed percentage stake
+- `POST /api/tools/bankroll/unit-size` - Calculate unit size for tracking
+- `POST /api/tools/bankroll/check-limits` - Check if stake exceeds limits
+- `POST /api/tools/bankroll/stop-levels` - Get stop-loss and take-profit levels
+- `GET /api/tools/bankroll/responsible-gambling` - Get tips and resources
+- `POST /api/tools/bankroll/evaluate-session` - Evaluate session for breaks
+
+**Example Usage:**
+```bash
+# Calculate suggested stake
+curl -X POST http://localhost:3001/api/tools/bankroll/suggested-stake \
+  -H "Content-Type: application/json" \
+  -d '{
+    "bankroll": 1000,
+    "odds": 2.0,
+    "estimatedWinProbability": 0.55,
+    "riskTolerance": "moderate"
+  }'
+
+# Response:
+# {
+#   "suggestedStake": 25.00,
+#   "maxStake": 40.00,
+#   "minStake": 1.00,
+#   "riskLevel": "moderate",
+#   "reasoning": "Based on 50% Kelly Criterion with moderate risk profile."
+# }
+
+# Calculate stop levels
+curl -X POST http://localhost:3001/api/tools/bankroll/stop-levels \
+  -H "Content-Type: application/json" \
+  -d '{"bankroll": 1000, "riskTolerance": "moderate"}'
+
+# Response:
+# {
+#   "stopLoss": 800,
+#   "stopLossPercentage": 20,
+#   "takeProfit": 1300,
+#   "takeProfitPercentage": 30,
+#   "recommendations": [...]
+# }
+```
+
+### 8. 📚 Educational Resources
+
+Comprehensive betting education through the frontend, including:
+
+**Topics Covered:**
+- Understanding Betting Odds (decimal, American, fractional)
+- Types of Bets (moneyline, spreads, totals, parlays, props, futures)
+- Bankroll Management 101
+- The Kelly Criterion
+- Finding Value Bets
+- Common Betting Mistakes to Avoid
+- Responsible Gambling Guide
+- Line Shopping for Best Odds
+
+**Access:**
+Available in the frontend at the "Learn" tab with searchable, categorized guides.
+
 ## 🚀 Getting Started
 
 ### Backend API

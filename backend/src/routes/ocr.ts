@@ -1,11 +1,11 @@
 /**
  * OCR API Routes
- * Handles screenshot upload and text extraction using Azure Computer Vision
+ * Handles screenshot upload and text extraction using Tesseract.js (open-source OCR)
  */
 
 import { Router, Request, Response } from 'express';
 import multer from 'multer';
-import { extractTextFromImage, parseOddsFromOCR } from '../utils/azureOCR';
+import { extractTextFromImage, parseOddsFromOCR } from '../utils/tesseractOCR';
 
 const router = Router();
 
@@ -36,16 +36,7 @@ router.post('/extract', upload.single('image'), async (req: Request, res: Respon
       return;
     }
 
-    // Check if Azure credentials are configured
-    if (!process.env.AZURE_VISION_ENDPOINT || !process.env.AZURE_VISION_KEY) {
-      res.status(503).json({
-        error: 'OCR service not configured',
-        message: 'Azure Computer Vision credentials are not set. Please configure AZURE_VISION_ENDPOINT and AZURE_VISION_KEY environment variables.',
-      });
-      return;
-    }
-
-    // Extract text from image
+    // Extract text from image using Tesseract.js
     const ocrResult = await extractTextFromImage(req.file.buffer);
 
     // Parse odds from extracted text
@@ -71,17 +62,13 @@ router.post('/extract', upload.single('image'), async (req: Request, res: Respon
 
 /**
  * GET /api/ocr/status
- * Check if OCR service is configured
+ * Check if OCR service is available (always true for Tesseract.js since it's local)
  */
 router.get('/status', (_req: Request, res: Response) => {
-  const isConfigured = !!(process.env.AZURE_VISION_ENDPOINT && process.env.AZURE_VISION_KEY);
-
   res.json({
-    configured: isConfigured,
-    service: 'Azure Computer Vision',
-    message: isConfigured
-      ? 'OCR service is ready'
-      : 'OCR service is not configured. Please set AZURE_VISION_ENDPOINT and AZURE_VISION_KEY environment variables.',
+    configured: true,
+    service: 'Tesseract.js (Open Source)',
+    message: 'OCR service is ready - no external API keys required',
   });
 });
 
@@ -91,7 +78,7 @@ router.get('/status', (_req: Request, res: Response) => {
  */
 router.get('/', (_req: Request, res: Response) => {
   res.json({
-    message: 'Bet Buddy OCR API - Azure Computer Vision',
+    message: 'Bet Buddy OCR API - Tesseract.js (Open Source)',
     version: '1.0.0',
     endpoints: {
       extract: 'POST /api/ocr/extract - Upload screenshot to extract odds',
@@ -105,9 +92,11 @@ router.get('/', (_req: Request, res: Response) => {
       maxFileSize: '10MB',
       acceptedFormats: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
     },
-    configuration: {
-      required: ['AZURE_VISION_ENDPOINT', 'AZURE_VISION_KEY'],
-      docs: 'https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/',
+    features: {
+      noApiKeyRequired: true,
+      offlineCapable: true,
+      openSource: true,
+      engine: 'Tesseract.js v5',
     },
   });
 });

@@ -39,7 +39,7 @@ function advanceRunners(bases: [boolean, boolean, boolean], numBases: number): n
   }
 
   // Place batter
-  if (numBases >= 3) {
+  if (numBases >= 4) {
     runs++;
   } else {
     newBases[numBases - 1] = true;

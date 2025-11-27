@@ -21,7 +21,7 @@ app.get('/health', (_req: Request, res: Response) => {
 
 // API routes
 app.get('/api', (_req: Request, res: Response) => {
-  res.json({ message: 'Bet Buddy API is running' });
+  res.json({ message: 'Overlay Odds API is running' });
 });
 
 // Tools API routes

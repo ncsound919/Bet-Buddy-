@@ -1,6 +1,6 @@
-# 🎲 Bet Buddy
+# 📊 Overlay Odds
 
-A comprehensive betting helper application with tools for analysis, bankroll management, and education. Learn from your own bets and make more informed betting decisions.
+A comprehensive betting analysis platform with tools for analysis, bankroll management, and education. Make more informed betting decisions with professional-grade tools.
 
 ## ✨ Features
 
@@ -109,7 +109,7 @@ L2,NBA,UTA@LAC,ML,Clippers,1.29,0.80
 
 ## ⚠️ Responsible Gambling
 
-Bet Buddy promotes responsible gambling. Features include:
+Overlay Odds promotes responsible gambling. Features include:
 - Betting limit tracking
 - Session evaluation for tilt detection
 - Educational resources on responsible gambling

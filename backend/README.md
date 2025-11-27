@@ -1,8 +1,8 @@
-# Bet Buddy Backend API
+# Overlay Odds Backend API
 
 ## Overview
 
-This is the backend API for Bet Buddy, built with Node.js, Express, and TypeScript.
+This is the backend API for Overlay Odds, built with Node.js, Express, and TypeScript.
 
 ## Getting Started
 

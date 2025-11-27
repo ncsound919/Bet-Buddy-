@@ -21,7 +21,7 @@ function App() {
         flexWrap: 'wrap'
       }}>
         <span style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
-          🎲 Bet Buddy
+          📊 Overlay Odds
         </span>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button

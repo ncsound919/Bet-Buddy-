@@ -132,9 +132,9 @@ function ToolsDemo() {
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>🎲 Bet Buddy Tools Demo</h1>
+      <h1>📊 Overlay Odds Tools</h1>
       <p>
-        Open-source utilities for betting analysis and data management - no external dependencies!
+        Professional utilities for betting analysis and data management - no external dependencies!
       </p>
 
       <div style={{ marginBottom: '20px' }}>

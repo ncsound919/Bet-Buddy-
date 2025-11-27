@@ -91,7 +91,7 @@ router.get('/status', (_req: Request, res: Response) => {
  */
 router.get('/', (_req: Request, res: Response) => {
   res.json({
-    message: 'Bet Buddy OCR API - Azure Computer Vision',
+    message: 'Overlay Odds OCR API - Azure Computer Vision',
     version: '1.0.0',
     endpoints: {
       extract: 'POST /api/ocr/extract - Upload screenshot to extract odds',

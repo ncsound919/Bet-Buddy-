@@ -17,8 +17,10 @@ Bet Buddy uses **Tesseract.js** - a fully open-source OCR engine that runs local
 
 **Benefits:**
 - 🆓 **Free forever** - no API keys or subscriptions needed
-- 🔒 **Privacy-first** - all processing happens locally, images never leave your device
-- 📴 **Offline capable** - works without internet connection
+- 🔒 **Privacy-first** - all image processing happens locally, and images never leave your device.  
+  _Note: On first use, Tesseract.js downloads language data from a public CDN (cdn.jsdelivr.net); after that, everything runs locally._
+- 📴 **Offline capable** - works without internet connection **after first run**  
+  _ℹ️ First run requires internet to download language data (~15MB). Subsequent runs work fully offline._
 - ⚡ **Fast** - no network latency, instant processing
 
 ## 🚀 Quick Start
@@ -88,6 +90,10 @@ fun uploadScreenshot(imageFile: File) {
 
 ```swift
 // iOS - Upload screenshot to backend
+enum OCRError: Error {
+    case imageConversionFailed
+}
+
 func uploadScreenshot(image: UIImage) async throws -> OCRResponse {
     let url = URL(string: "http://your-backend/api/ocr/extract")!
     var request = URLRequest(url: url)
@@ -96,12 +102,17 @@ func uploadScreenshot(image: UIImage) async throws -> OCRResponse {
     let boundary = UUID().uuidString
     request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
     
+    // Safely convert image to JPEG data
+    guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+        throw OCRError.imageConversionFailed
+    }
+    
     // Create multipart body with image data
     var body = Data()
     body.append("--\(boundary)\r\n".data(using: .utf8)!)
     body.append("Content-Disposition: form-data; name=\"image\"; filename=\"screenshot.jpg\"\r\n".data(using: .utf8)!)
     body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-    body.append(image.jpegData(compressionQuality: 0.8)!)
+    body.append(imageData)
     body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
     
     request.httpBody = body
@@ -156,7 +167,7 @@ For best OCR results:
 ## 🔐 Security & Privacy
 
 - **Local processing:** All OCR happens on your server, images never leave your infrastructure
-- **No data collection:** Tesseract.js doesn't send any data externally
+- **No data collection:** Tesseract.js does not send your images or personal data externally. However, it does download language data from a public CDN (e.g., cdn.jsdelivr.net) on first use.
 - **Memory only:** Images are processed in memory and not persisted to disk
 - **Open source:** Full transparency - you can audit the code yourself
 

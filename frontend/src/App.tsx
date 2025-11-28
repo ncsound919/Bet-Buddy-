@@ -6,12 +6,12 @@ import baseballIcon from './assets/baseball.svg'
 import soccerIcon from './assets/soccer.svg'
 
 function App() {
-  const [activeStats] = useState({
+  const activeStats = {
     totalBets: 247,
     winRate: 68,
     activeBets: 12,
     profit: 3240
-  })
+  }
 
   return (
     <div className="app-container">

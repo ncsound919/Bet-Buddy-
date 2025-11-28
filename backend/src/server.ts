@@ -36,6 +36,7 @@ app.get('/api', (_req: Request, res: Response) => {
       'API Integrations'
     ]
   });
+  res.json({ message: 'Overlay Odds API is running' });
 });
 
 // Tools API routes

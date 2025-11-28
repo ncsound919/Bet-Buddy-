@@ -1,7 +1,7 @@
 {
-  "name": "bet-buddy",
+  "name": "overlay-odds",
   "version": "1.0.0",
-  "description": "Learn from your own bets - A comprehensive betting tracking application",
+  "description": "Overlay Odds - Professional betting analysis and tracking tools",
   "private": true,
   "scripts": {
     "install:all": "npm install --prefix backend && npm install --prefix frontend",

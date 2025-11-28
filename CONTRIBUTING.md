@@ -1,6 +1,6 @@
-# Contributing to Bet-Buddy
+# Contributing to Overlay Odds
 
-Thank you for your interest in contributing to Bet-Buddy! This guide will help you get started.
+Thank you for your interest in contributing to Overlay Odds! This guide will help you get started.
 
 ## Development Setup
 

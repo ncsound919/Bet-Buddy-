@@ -1,6 +1,6 @@
 # Screenshot OCR Setup Guide
 
-This guide explains how to set up Azure Computer Vision for screenshot-to-odds extraction in Bet Buddy.
+This guide explains how to set up Azure Computer Vision for screenshot-to-odds extraction in Overlay Odds.
 
 ## 🎯 What This Does
 
@@ -31,7 +31,7 @@ Fill in the details:
 - **Subscription:** Your Azure subscription
 - **Resource group:** Create new or use existing
 - **Region:** Choose closest to you (e.g., East US, West Europe)
-- **Name:** `bet-buddy-ocr` (or any name you prefer)
+- **Name:** `overlay-odds-ocr` (or any name you prefer)
 - **Pricing tier:** **Free F0** (5,000 transactions/month)
 
 Click **"Review + create"** then **"Create"**
@@ -42,10 +42,10 @@ Once deployed:
 1. Go to your Computer Vision resource
 2. Click **"Keys and Endpoint"** in the left menu
 3. Copy:
-   - **Endpoint** (e.g., `https://bet-buddy-ocr.cognitiveservices.azure.com/`)
+   - **Endpoint** (e.g., `https://overlay-odds-ocr.cognitiveservices.azure.com/`)
    - **Key 1** (your subscription key)
 
-### 4. Configure Bet Buddy Backend
+### 4. Configure Overlay Odds Backend
 
 Add to your `backend/.env` file:
 
@@ -83,7 +83,7 @@ You should see:
 ### Option 1: Direct Upload (WebView)
 
 If your Android app uses a WebView:
-1. Navigate to the Bet Buddy frontend
+1. Navigate to the Overlay Odds frontend
 2. Click the **"📷 Screenshot OCR"** tab
 3. Use the file picker to upload screenshots
 4. Extract odds automatically
@@ -174,7 +174,7 @@ For best OCR results:
 ## 🌐 Alternative: Manual Input
 
 If you prefer not to use Azure OCR:
-- Use the other Bet Buddy tools to manually input data
+- Use the other Overlay Odds tools to manually input data
 - The odds calculator and validator help speed up data entry
 - No external dependencies required
 

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import toolsRouter from './routes/tools';
 import ocrRouter from './routes/ocr';
+import gamesRouter from './routes/games';
 
 dotenv.config();
 
@@ -21,6 +22,20 @@ app.get('/health', (_req: Request, res: Response) => {
 
 // API routes
 app.get('/api', (_req: Request, res: Response) => {
+  res.json({ 
+    message: 'Bet Buddy API is running',
+    version: '2.0.0',
+    features: [
+      'Odds Calculator',
+      'Statistics Engine',
+      'Data Validator',
+      'Data Exporter',
+      'Screenshot OCR',
+      'Sports Games',
+      'SimVC Currency',
+      'API Integrations'
+    ]
+  });
   res.json({ message: 'Overlay Odds API is running' });
 });
 
@@ -29,6 +44,9 @@ app.use('/api/tools', toolsRouter);
 
 // OCR API routes
 app.use('/api/ocr', ocrRouter);
+
+// Games and SimVC API routes
+app.use('/api/games', gamesRouter);
 
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: any) => {

@@ -3,6 +3,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnp
+.pnp.js
 
 # Expo
 .expo/
@@ -30,6 +32,61 @@ web-build/
 
 # macOS
 .DS_Store
+*.ipa
+*.apk
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+lerna-debug.*
+.pnpm-debug.log*
+
+# Local env files
+.env*.local
+.env
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+coverage/
+*.coverageprofile
+
+# Temporary
+*.tmp
+*.temp
+/tmp/
+*/node_modules/
+
+# Build output
+dist/
+build/
+*/dist/
+*/build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # IDE
 .vscode/
@@ -45,3 +102,10 @@ coverage/
 tmp/
 temp/
 *.log
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+*/coverage/

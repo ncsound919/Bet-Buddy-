@@ -1,0 +1,21 @@
+{
+  "moonshot": {
+    "unit": 1.0,
+    "budget": 10.0,
+    "target_gross_per_unit": 1000.0,
+    "max_legs": 16
+  },
+  "spray": {
+    "unit": 0.5,
+    "budget": 10.0,
+    "payout_band": [
+      6.0,
+      20.0
+    ],
+    "max_legs": 10,
+    "max_tickets": 20
+  },
+  "filters": {
+    "min_edge_ratio": 1.0
+  }
+}

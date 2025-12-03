@@ -1,0 +1,13 @@
+leg_id,sport,game,market,selection,decimal_odds,model_prob
+L1,NBA,MIL@WAS,ML,Bucks,1.28,0.83
+L2,NBA,LAC@UTA,ML,Clippers,1.29,0.79
+L3,NBA,TOR@ATL,Spread,Hawks -6,1.91,0.56
+L4,NBA,CLE@NYK,ML,Knicks,1.57,0.64
+L5,NBA,GSW@LAL,Total,Over 225.5,1.91,0.54
+L6,NBA,MIN@POR,ML,Timberwolves,1.70,0.60
+L7,NBA,DET@CHI,ML,Pistons,1.77,0.57
+L8,NBA,MIA@ORL,Spread,Heat +7.5,1.91,0.53
+L9,NBA,SAS@DAL,Total,Over 226.5,1.91,0.52
+L10,NBA,PHX@SAC,ML,Suns,1.87,0.54
+L11,NBA,MEM@NOP,Spread,Grizzlies -6.5,1.91,0.52
+L12,NBA,CHA@BKN,ML,Hornets,1.68,0.57

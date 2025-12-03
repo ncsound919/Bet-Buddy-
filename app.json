@@ -10,6 +10,12 @@
       "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1976D2"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -28,5 +34,34 @@
     "web": {
       "favicon": "./src/assets/images/favicon.png"
     }
+      "bundleIdentifier": "com.betbuddy.app",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1976D2"
+      },
+      "package": "com.betbuddy.app",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Bet Buddy to access your photos to upload bet slips."
+        }
+      ]
+    ]
   }
 }

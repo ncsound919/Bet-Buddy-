@@ -1,10 +1,9 @@
 /**
- * Azure Computer Vision OCR Tool
- * Extracts text from betting screenshots using Azure Computer Vision API
+ * Tesseract.js OCR Tool
+ * Extracts text from betting screenshots using Tesseract.js (open-source, no external API required)
  */
 
-import { ComputerVisionClient } from '@azure/cognitiveservices-computervision';
-import { ApiKeyCredentials } from '@azure/ms-rest-js';
+import Tesseract from 'tesseract.js';
 
 export interface OCRResult {
   rawText: string;
@@ -21,97 +20,57 @@ export interface ExtractedOdds {
 }
 
 /**
- * Initialize Azure Computer Vision client
- */
-function getVisionClient(): ComputerVisionClient | null {
-  const endpoint = process.env.AZURE_VISION_ENDPOINT;
-  const apiKey = process.env.AZURE_VISION_KEY;
-
-  if (!endpoint || !apiKey) {
-    console.warn('Azure Computer Vision credentials not configured');
-    return null;
-  }
-
-  const credentials = new ApiKeyCredentials({ inHeader: { 'Ocp-Apim-Subscription-Key': apiKey } });
-  return new ComputerVisionClient(credentials, endpoint);
-}
-
-/**
- * Extract text from image using Azure Computer Vision OCR
+ * Extract text from image using Tesseract.js OCR
+ * This is a fully open-source solution that runs locally - no external API keys required
+ * 
+ * Note: On first run, Tesseract.js downloads language data (~15MB) from CDN.
+ * Subsequent runs use cached data for faster processing.
  */
 export async function extractTextFromImage(imageBuffer: Buffer): Promise<OCRResult> {
-  const client = getVisionClient();
-
-  if (!client) {
-    throw new Error('Azure Computer Vision not configured. Please set AZURE_VISION_ENDPOINT and AZURE_VISION_KEY environment variables.');
-  }
-
   try {
-    // Use Read API for better accuracy
-    const readResult = await client.readInStream(imageBuffer);
-    
-    // Get operation location from headers
-    const operationLocation = readResult._response.headers.get('operation-location');
-    if (!operationLocation) {
-      throw new Error('Failed to get operation location from Azure response');
-    }
-
-    // Extract operation ID from the URL
-    const operationId = operationLocation.split('/').pop();
-    if (!operationId) {
-      throw new Error('Failed to extract operation ID');
-    }
-
-    // Poll for results
-    let result = await client.getReadResult(operationId);
-    let attempts = 0;
-    const maxAttempts = 20;
-
-    while (result.status === 'running' || result.status === 'notStarted') {
-      if (attempts >= maxAttempts) {
-        throw new Error('OCR operation timed out');
-      }
-      await new Promise(resolve => setTimeout(resolve, 500));
-      result = await client.getReadResult(operationId);
-      attempts++;
-    }
-
-    if (result.status !== 'succeeded') {
-      throw new Error(`OCR operation failed with status: ${result.status}`);
-    }
+    // Use Tesseract.js to recognize text from the image buffer
+    const result = await Tesseract.recognize(imageBuffer, 'eng', {
+      logger: () => {
+        // Silent logger - we don't need progress updates
+      },
+    });
 
     // Extract text from results
-    const lines: string[] = [];
-    let rawText = '';
-
-    if (result.analyzeResult?.readResults) {
-      for (const page of result.analyzeResult.readResults) {
-        if (page.lines) {
-          for (const line of page.lines) {
-            lines.push(line.text || '');
-            rawText += (line.text || '') + '\n';
-          }
-        }
-      }
-    }
+    const rawText = result.data.text.trim();
+    const lines: string[] = rawText
+      .split('\n')
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0);
 
     // Extract odds from text
     const extractedOdds = extractOddsFromText(lines);
 
-    // Calculate overall confidence
-    const confidence = extractedOdds.length > 0
-      ? extractedOdds.reduce((sum, odd) => sum + odd.confidence, 0) / extractedOdds.length
-      : 0;
+    // Use Tesseract's confidence score (0-100, convert to 0-1)
+    const tesseractConfidence = result.data.confidence / 100;
+
+    // Calculate overall confidence combining Tesseract confidence and odds extraction
+    const oddsConfidence =
+      extractedOdds.length > 0 ? extractedOdds.reduce((sum, odd) => sum + odd.confidence, 0) / extractedOdds.length : 0;
+
+    // Weight both confidences
+    const confidence = extractedOdds.length > 0 ? (tesseractConfidence + oddsConfidence) / 2 : tesseractConfidence;
 
     return {
-      rawText: rawText.trim(),
+      rawText,
       lines,
       extractedOdds,
       confidence: parseFloat(confidence.toFixed(2)),
     };
   } catch (error) {
-    console.error('Azure OCR error:', error);
-    throw new Error(`Failed to process image: ${(error as Error).message}`);
+    console.error('Tesseract OCR error:', error);
+    const errorMessage = (error as Error).message;
+    
+    // Check if it's a network error (can happen on first run when downloading language data)
+    if (errorMessage.includes('FetchError') || errorMessage.includes('ENOTFOUND') || errorMessage.includes('network')) {
+      throw new Error('OCR initialization failed. On first run, Tesseract.js needs internet access to download language data. Please ensure internet connectivity and try again.');
+    }
+    
+    throw new Error(`Failed to process image: ${errorMessage}`);
   }
 }
 

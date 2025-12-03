@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
@@ -31,15 +31,6 @@ function ScreenshotOCR() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<OCRResponse | null>(null);
   const [error, setError] = useState<string>('');
-  const [ocrConfigured, setOcrConfigured] = useState<boolean | null>(null);
-
-  // Check if OCR is configured on mount
-  useEffect(() => {
-    fetch(`${API_BASE}/ocr/status`)
-      .then(res => res.json())
-      .then(data => setOcrConfigured(data.configured))
-      .catch(() => setOcrConfigured(false));
-  }, []);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -100,25 +91,22 @@ function ScreenshotOCR() {
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '1000px', margin: '0 auto' }}>
       <h1>📷 Screenshot OCR</h1>
-      <p>Upload a betting screenshot to automatically extract odds using Azure Computer Vision</p>
+      <p>Upload a betting screenshot to automatically extract odds using Tesseract.js (open-source OCR)</p>
 
-      {ocrConfigured === false && (
-        <div
-          style={{
-            padding: '15px',
-            backgroundColor: '#fff3cd',
-            border: '1px solid #ffc107',
-            borderRadius: '4px',
-            marginBottom: '20px',
-          }}
-        >
-          <strong>⚠️ OCR Not Configured</strong>
-          <p style={{ margin: '10px 0 0 0' }}>
-            Azure Computer Vision credentials are not set. Please configure AZURE_VISION_ENDPOINT and
-            AZURE_VISION_KEY in your backend .env file.
-          </p>
-        </div>
-      )}
+      <div
+        style={{
+          padding: '15px',
+          backgroundColor: '#d4edda',
+          border: '1px solid #c3e6cb',
+          borderRadius: '4px',
+          marginBottom: '20px',
+        }}
+      >
+        <strong>✅ Ready to Use</strong>
+        <p style={{ margin: '10px 0 0 0' }}>
+          OCR is powered by Tesseract.js - no external API keys or configuration required!
+        </p>
+      </div>
 
       <div style={{ marginBottom: '20px' }}>
         <input
@@ -130,15 +118,15 @@ function ScreenshotOCR() {
         />
         <button
           onClick={handleUpload}
-          disabled={!selectedFile || loading || ocrConfigured === false}
+          disabled={!selectedFile || loading}
           style={{
             padding: '8px 16px',
             marginRight: '10px',
-            backgroundColor: loading || !selectedFile || ocrConfigured === false ? '#ccc' : '#4CAF50',
+            backgroundColor: loading || !selectedFile ? '#ccc' : '#4CAF50',
             color: 'white',
             border: 'none',
             borderRadius: '4px',
-            cursor: loading || !selectedFile || ocrConfigured === false ? 'not-allowed' : 'pointer',
+            cursor: loading || !selectedFile ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? '⏳ Processing...' : '🔍 Extract Odds'}

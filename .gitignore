@@ -1,5 +1,8 @@
 # Dependencies
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 package-lock.json
 
 # Build artifacts
@@ -29,6 +32,19 @@ web-build/
 *.p12
 *.key
 *.mobileprovision
+*.orig.*
+*.ipa
+*.apk
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# macOS
+.DS_Store
 *.ipa
 *.apk
 
@@ -92,6 +108,13 @@ yarn-error.log*
 *.swo
 *~
 
+# Testing
+coverage/
+
+# Temporary
+tmp/
+temp/
+*.log
 # OS
 .DS_Store
 Thumbs.db

@@ -2,6 +2,27 @@
   "name": "bet-buddy",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "description": "Learn from your own bets - An accessible betting tracking application",
+  "main": "index.html",
+  "scripts": {
+    "lint": "eslint *.js",
+    "lint:fix": "eslint *.js --fix"
+  },
+  "keywords": [
+    "betting",
+    "tracking",
+    "accessible",
+    "a11y"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0"
+  },
+  "dependencies": {
+    "axe-core": "^4.8.0"
+  }
   "description": "Learn from your own bets - A fast, learning-focused bet improvement app",
   "scripts": {
     "start": "expo start",

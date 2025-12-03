@@ -1,0 +1,44 @@
+{
+  "novice_features": [
+    {
+      "id": 1,
+      "name": "Interactive Dashboards",
+      "description": "User-friendly visualizations of key statistics and trends, designed to help novices understand data quickly."
+    },
+    {
+      "id": 2,
+      "name": "Educational Tutorials",
+      "description": "Step-by-step guides on foundational betting concepts, strategies, and terminology available in text and video format."
+    },
+    {
+      "id": 3,
+      "name": "Glossary of Betting Terms",
+      "description": "A comprehensive glossary explaining common betting terms and jargon to make them accessible for beginners."
+    },
+    {
+      "id": 4,
+      "name": "Curated Expert Commentary",
+      "description": "Summaries of expert analyses and opinions that break down complex concepts into digestible insights for novices."
+    },
+    {
+      "id": 5,
+      "name": "Decision-Making Checklists",
+      "description": "Structured lists to help novices evaluate key factors when deciding on bets, ensuring they consider all relevant details."
+    },
+    {
+      "id": 6,
+      "name": "Live Chat Support",
+      "description": "A live Q&A feature that allows novices to ask questions and receive immediate assistance with betting queries."
+    },
+    {
+      "id": 7,
+      "name": "Practice Mode",
+      "description": "A simulated betting environment that allows novices to place mock bets with virtual currency to practice before betting real money."
+    },
+    {
+      "id": 8,
+      "name": "Webinars with Experts",
+      "description": "Regular live sessions with betting experts where novices can ask questions and learn about current trends and strategies."
+    }
+  ]
+}

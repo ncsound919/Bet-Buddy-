@@ -1,9 +1,9 @@
 {
-  "name": "bet-buddy-frontend",
+  "name": "overlay-odds-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Frontend application for Bet Buddy",
+  "description": "Frontend application for Overlay Odds",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",

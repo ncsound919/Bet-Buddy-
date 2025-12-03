@@ -1,5 +1,5 @@
 /**
- * Bet Buddy Utility Tools
+ * Overlay Odds Utility Tools
  * Collection of tools to enhance betting tracking functionality
  */
 

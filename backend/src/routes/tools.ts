@@ -417,7 +417,7 @@ router.post('/bankroll/evaluate-session', (req: Request, res: Response) => {
 // Tools listing endpoint
 router.get('/', (_req: Request, res: Response) => {
   res.json({
-    message: 'Bet Buddy Tools API',
+    message: 'Overlay Odds Tools API',
     version: '1.0.0',
     tools: {
       oddsCalculator: {

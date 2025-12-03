@@ -1,10 +1,10 @@
-# Bet Buddy Tools
+# Overlay Odds Tools
 
-A comprehensive collection of open-source utility tools for betting analysis and data management. All tools are implemented using vanilla TypeScript with **no external dependencies** to keep the application lightweight and maintainable.
+A comprehensive collection of utility tools for betting analysis and data management. All tools are implemented using vanilla TypeScript with **no external dependencies** to keep the application lightweight and maintainable.
 
 ## 🎯 Overview
 
-These tools add powerful functionality to Bet Buddy without bloat or overreach. Each tool is focused, efficient, and available through both backend API endpoints and frontend components.
+These tools add powerful functionality to Overlay Odds without bloat or overreach. Each tool is focused, efficient, and available through both backend API endpoints and frontend components.
 
 ## 🛠️ Available Tools
 
@@ -442,4 +442,4 @@ To add a new tool:
 
 ## 📄 License
 
-MIT - Same as the main Bet Buddy project
+MIT - Same as the main Overlay Odds project

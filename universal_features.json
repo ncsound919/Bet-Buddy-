@@ -1,0 +1,44 @@
+{
+  "universal_features": [
+    {
+      "id": 1,
+      "name": "Bet Simulator",
+      "description": "A feature that allows users to place simulated bets and track their performance without financial risk."
+    },
+    {
+      "id": 2,
+      "name": "Betting Odds Comparison",
+      "description": "Compare odds from different bookmakers to find the best value for each bet across various platforms."
+    },
+    {
+      "id": 3,
+      "name": "Expert Tips and Predictions",
+      "description": "Receive actionable, event-specific betting tips and outcome predictions from experts, focused on practical advice for upcoming matches and markets."
+    },
+    {
+      "id": 4,
+      "name": "Bankroll Management Tools",
+      "description": "Tools to help users track their betting history, manage their bankroll, and set limits to promote responsible gambling."
+    },
+    {
+      "id": 5,
+      "name": "Trend and News Alerts",
+      "description": "Real-time notifications about significant betting trends, injuries, and news influencing betting decisions."
+    },
+    {
+      "id": 6,
+      "name": "Community Forum",
+      "description": "A space for users to discuss strategies, share insights, and connect with other bettors regardless of experience."
+    },
+    {
+      "id": 7,
+      "name": "Custom Betting Strategies",
+      "description": "Personalized recommendations and templates for betting strategies based on user profiles and previous betting performance."
+    },
+    {
+      "id": 8,
+      "name": "Scenario Analysis",
+      "description": "Analyze various betting scenarios and receive feedback from the app on the likelihood of success."
+    }
+  ]
+}

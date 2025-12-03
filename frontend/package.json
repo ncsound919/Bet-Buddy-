@@ -1,9 +1,9 @@
 {
-  "name": "bet-buddy-frontend",
+  "name": "overlay-odds-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Frontend application for Bet Buddy",
+  "description": "Frontend application for Overlay Odds",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

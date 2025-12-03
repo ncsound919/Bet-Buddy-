@@ -1,6 +1,7 @@
 # Screenshot OCR Setup Guide
 
 This guide explains how Tesseract.js is used for screenshot-to-odds extraction in Bet Buddy.
+This guide explains how to set up Azure Computer Vision for screenshot-to-odds extraction in Overlay Odds.
 
 ## 🎯 What This Does
 
@@ -26,6 +27,42 @@ Bet Buddy uses **Tesseract.js** - a fully open-source OCR engine that runs local
 ## 🚀 Quick Start
 
 ### 1. Start the Backend
+1. Go to [Azure Portal](https://portal.azure.com/)
+2. Click **"Create a resource"**
+3. Search for **"Computer Vision"**
+4. Click **"Create"**
+
+### 2. Configure the Resource
+
+Fill in the details:
+- **Subscription:** Your Azure subscription
+- **Resource group:** Create new or use existing
+- **Region:** Choose closest to you (e.g., East US, West Europe)
+- **Name:** `overlay-odds-ocr` (or any name you prefer)
+- **Pricing tier:** **Free F0** (5,000 transactions/month)
+
+Click **"Review + create"** then **"Create"**
+
+### 3. Get Your Credentials
+
+Once deployed:
+1. Go to your Computer Vision resource
+2. Click **"Keys and Endpoint"** in the left menu
+3. Copy:
+   - **Endpoint** (e.g., `https://overlay-odds-ocr.cognitiveservices.azure.com/`)
+   - **Key 1** (your subscription key)
+
+### 4. Configure Overlay Odds Backend
+
+Add to your `backend/.env` file:
+
+```env
+# Azure Computer Vision for OCR
+AZURE_VISION_ENDPOINT=https://your-resource.cognitiveservices.azure.com/
+AZURE_VISION_KEY=your-subscription-key-here
+```
+
+### 5. Restart Backend
 
 ```bash
 cd backend
@@ -59,6 +96,8 @@ Navigate to the Bet Buddy frontend and click the **"📷 Screenshot OCR"** tab t
 
 If your mobile app uses a WebView:
 1. Navigate to the Bet Buddy frontend
+If your Android app uses a WebView:
+1. Navigate to the Overlay Odds frontend
 2. Click the **"📷 Screenshot OCR"** tab
 3. Use the file picker to upload screenshots
 4. Extract odds automatically
@@ -170,6 +209,12 @@ For best OCR results:
 - **No data collection:** Tesseract.js does not send your images or personal data externally. However, it does download language data from a public CDN (e.g., cdn.jsdelivr.net) on first use.
 - **Memory only:** Images are processed in memory and not persisted to disk
 - **Open source:** Full transparency - you can audit the code yourself
+## 🌐 Alternative: Manual Input
+
+If you prefer not to use Azure OCR:
+- Use the other Overlay Odds tools to manually input data
+- The odds calculator and validator help speed up data entry
+- No external dependencies required
 
 ## 📚 Additional Resources
 

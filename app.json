@@ -4,13 +4,7 @@
     "slug": "bet-buddy",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    ,
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -22,20 +16,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.betbuddy.app"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#000000"
-      },
-      "package": "com.betbuddy.app"
-    },
-    "web": {
-      "favicon": "./src/assets/images/favicon.png"
-    }
       "bundleIdentifier": "com.betbuddy.app",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {

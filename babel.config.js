@@ -18,8 +18,7 @@ module.exports = function(api) {
             '@hooks': './src/hooks',
             '@navigation': './src/navigation',
             '@theme': './src/theme',
-            '@constants': './src/constants',
-            'src': './src'
+            '@constants': './src/constants'
           }
         }
       ]
